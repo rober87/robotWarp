@@ -1,5 +1,7 @@
 <?php
 
+require 'top.php';
+
 
 function moveForward($posX, $posY, $dir)
 {

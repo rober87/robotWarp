@@ -3,19 +3,14 @@
 
 require 'robot.php';
 require 'utils.php';
-
-$GLOBALS['dirs'] = array(0 => 'N', 1 => 'E', 2 => 'S', 3 => 'W');
-$GLOBALS['curDir'] = 0;
-$GLOBALS['gridSize'] = 100;
-$GLOBALS['startPoint'] = [50, 50];
-$GLOBALS['obstacles'] = array([48,50], [4,3]);
+require 'top.php';
 
 
 $moveArray = [];
 $movKey=array('f' => 'forward', 'b' => 'backwards');
 $posX = $GLOBALS['startPoint'][0];
 $posY = $GLOBALS['startPoint'][1];
-$destination = false;
+$destination = null;
 
 echo "Enter movements. Only f, b, r or l will be processed!: ";
 $string = readline("Enter movements. Only f, b, r or l will be processed!: ");
@@ -34,7 +29,10 @@ foreach ($moveArray as $movement) {
         } else if ($movement == 'b') {
             $destination = moveBackwards($posX, $posY, $GLOBALS['dirs'][$direction]);
         }
-        
+        else {
+            $destination = null;
+        }
+
         if ($destination != null){
             if (crash($destination[0], $destination[1])) {
                 exit("Robot crashed in position (" . $destination[0] . ", " . $destination[1] . ")\n" .
@@ -49,4 +47,4 @@ foreach ($moveArray as $movement) {
         }
     }
 }
-echo 'FINAL POSITION: ' . $posX . ', ' . $posY;
+echo "FINAL POSITION: (" . $posX . ", " . $posY . ")\n";
