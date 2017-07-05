@@ -3,8 +3,7 @@
 
 function moveForward($posX, $posY, $dir)
 {
-    echo 'At position [', $posX . ',' . $posY . "]\n";
-    echo 'move forward facing ', $dir, "\n";
+    echo "At position (" . $posX . "," . $posY . ")\n";
     switch ($dir) {
         case 'N':
             $end = [$posX, $posY - 1];
@@ -27,8 +26,7 @@ function moveForward($posX, $posY, $dir)
 
 function moveBackwards($posX, $posY, $dir)
 {
-    echo 'At position [', $posX . ',' . $posY . "]\n";
-    echo 'move backwards facing ', $dir, "\n";
+    echo "At position (" . $posX . ',' . $posY . ")\n";
     switch ($dir) {
         case 'N':
             $end = [$posX, $posY + 1];
@@ -53,24 +51,32 @@ function turning($command)
 {
     if ($command == 'r') {
         $current = $GLOBALS['curDir'];
-        echo $current . "\n";
         $dirs = $GLOBALS['dirs'];
-        $GLOBALS['curDir'] = ($current % 4) + 1;
-        echo $current . "\n";
-        echo 'turning ' . $command . ' from ' . $dirs[$current] . ', now facing ', $dirs[$GLOBALS['curDir']] . "\n";
+        $GLOBALS['curDir'] = (($current + 1) % 4);
+        echo "Robot turning right from " . $dirs[$current] . ", now facing " . $dirs[$GLOBALS['curDir']] . "\n";
     } else {
         $current = $GLOBALS['curDir'];
-        echo $current . "\n";
         $dirs = $GLOBALS['dirs'];
         $GLOBALS['curDir'] = (($current + 3) % 4);
-        echo $current . "\n";
-        echo 'turning ' . $command . ' from ' . $dirs[$current] . ', now facing ', $dirs[$GLOBALS['curDir']] . "\n";
+        echo "Robot turning left from " . $dirs[$current] . ", now facing " . $dirs[$GLOBALS['curDir']] . "\n";
     }
 }
 
 function crash($posX, $posY)
 {
-    if ($posX < 0 || $posY < 0)
+    $obstacles = $GLOBALS['obstacles'];
+    foreach ($obstacles as $obs){
+        if (($obs[0] == $posX) && ($obs[1] == $posY)){
+            return true;
+        }
+    }
+    return false;
+}
+
+function outOfBounds($posX, $posY) {
+    if ($posX <= 0 || $posX >= $GLOBALS['gridSize'] || $posY <= 0 || $posY >= $GLOBALS['gridSize']) {
         return true;
-    else return false;
+    }else {
+        return false;
+    }
 }

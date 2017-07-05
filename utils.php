@@ -9,7 +9,7 @@ function filterString($string) {
     try {
         $array = str_split($string);
     } catch (Exception $e) {
-        echo 'Caught exception: ', $e->getMessage(), "\n";
+        echo "Caught exception: " . $e->getMessage() . "\n";
     }
     return $array;
 }
